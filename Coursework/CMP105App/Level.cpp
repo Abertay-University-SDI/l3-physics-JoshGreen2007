@@ -80,4 +80,3 @@ void Level::render()
 	m_window.draw(m_sheep);
 	endDraw();
 }
-
