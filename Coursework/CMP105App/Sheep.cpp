@@ -46,30 +46,33 @@ void Sheep::handleInput(float dt)
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::W))
 	{
 
-		sf::Vector2f inputDir(0.f, -1.f);
+		inputDir.y -= 1.f;
 
 	}
 	
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::A))
 	{
 
-		sf::Vector2f inputDir(-1.f, 0.f);
+		inputDir.x -= 1.f;
 
 	}
 
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::S))
 	{
 
-		sf::Vector2f inputDir(0.f, 1.f);
+		inputDir.y += 1.f;
 
 	}
 
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::D))
 	{
 
-		sf::Vector2f inputDir(1.f, 0.f);
+		inputDir.x += 1.f;
 
 	}
+
+	// Convert direction into acceleration
+	m_acceleration = inputDir * ACCELERATION;
 
 }
 
@@ -96,7 +99,7 @@ void Sheep::update(float dt)
 
 		}
 
-		else
+		else if (m_velocity.x < 0)
 		{
 
 			m_currentAnimation = &m_walkRight;
@@ -107,14 +110,14 @@ void Sheep::update(float dt)
 		if (m_velocity.y > 0)
 		{
 
-			m_currentAnimation = &m_walkUp;
+			m_currentAnimation = &m_walkDown;
 
 		}
 
-		else
+		else if (m_velocity.y < 0)
 		{
 
-			m_currentAnimation = &m_walkDown;
+			m_currentAnimation = &m_walkUp;
 
 		}
 
