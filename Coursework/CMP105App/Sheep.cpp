@@ -92,6 +92,20 @@ void Sheep::update(float dt)
 	sf::Vector2f pos = getPosition();
 	sf::Vector2f size = getSize();
 
+	if (pos.x < 0 || pos.x + size.x > m_worldSize.x)
+	{
+
+		m_velocity.x = -m_velocity.x * CEOFF_OF_RESTITUTION;
+
+	}
+
+	if (pos.y < 0 || pos.y + size.y > m_worldSize.y)
+	{
+
+		m_velocity.y = -m_velocity.y * CEOFF_OF_RESTITUTION;
+
+	}
+
 	if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
 	{
 

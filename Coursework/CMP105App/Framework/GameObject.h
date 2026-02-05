@@ -57,4 +57,5 @@ protected:
 	// NOTE: we are using pointers here because GameObject may not need them, or they may be assigned later.
 	Input* m_input;
 	sf::RenderWindow* m_window;
+
 };
