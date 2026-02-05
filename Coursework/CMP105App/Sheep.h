@@ -13,7 +13,8 @@ public:
 	void handleInput(float dt) override;
 	void update(float dt) override;
 
-	void setWorldSize(sf::Vector2f size) { m_worldSize = size; }
+	void setWorldSize(float x, float y);
+	void checkWallAndBounce();
 
 private:
 	enum class Direction { UP, DOWN, LEFT, RIGHT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT, NONE };

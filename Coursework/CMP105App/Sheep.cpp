@@ -86,25 +86,11 @@ void Sheep::update(float dt)
 
 	// Apply Friction
 	m_velocity *= DRAG_FACTOR;
-
+	checkWallAndBounce();
 	move(m_velocity * dt);
 
 	sf::Vector2f pos = getPosition();
 	sf::Vector2f size = getSize();
-
-	if (pos.x < 0 || pos.x + size.x > m_worldSize.x)
-	{
-
-		m_velocity.x = -m_velocity.x * CEOFF_OF_RESTITUTION;
-
-	}
-
-	if (pos.y < 0 || pos.y + size.y > m_worldSize.y)
-	{
-
-		m_velocity.y = -m_velocity.y * CEOFF_OF_RESTITUTION;
-
-	}
 
 	if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
 	{
@@ -143,6 +129,37 @@ void Sheep::update(float dt)
 
 		m_currentAnimation->animate(dt);
 		setTextureRect(m_currentAnimation->getCurrentFrame());
+
+	}
+
+}
+
+void Sheep::setWorldSize(float x, float y)
+{
+
+	m_worldSize = { x, y };
+
+}
+
+void Sheep::checkWallAndBounce()
+{
+
+	sf::Vector2f pos = getPosition();
+
+	if ((pos.x < 0 && m_velocity.x < 0) ||
+		(pos.x = getSize().x > m_worldSize.x &&
+			m_velocity.x > 0))
+	{
+		m_velocity.x *= -CEOFF_OF_RESTITUTION;
+
+	}
+
+	if ((pos.y < 0 && m_velocity.y < 0) ||
+		(pos.y = getSize().y > m_worldSize.y &&
+			m_velocity.y > 0))
+	{
+
+		m_velocity.y *= -CEOFF_OF_RESTITUTION;
 
 	}
 
