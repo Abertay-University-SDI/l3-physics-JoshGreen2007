@@ -21,12 +21,15 @@ private:
 	const float INPUT_BUFFER_LENGTH = 0.1f;
 	const float APPROX_ONE_OVER_ROOT_TWO = 0.70710678f;	// 1 / sqrt(2)
 
+	const float ACCELERATION = 30.0f;   // rate of acceleration, suggested range 10-500
+	const float DRAG_FACTOR = 0.95f;    // friction, suggest range 0.7-0.99
+	sf::Vector2f m_acceleration;
+
 	Animation m_walkDown;
 	Animation m_walkUp;
 	Animation m_walkUpRight;
 	Animation m_walkRight;
 	Animation m_walkDownRight;
-
 	Animation* m_currentAnimation;
 };
 

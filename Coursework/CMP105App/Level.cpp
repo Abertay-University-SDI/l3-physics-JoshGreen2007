@@ -8,7 +8,7 @@ Level::Level(sf::RenderWindow& hwnd, Input& in) :
 	if (!m_backgroundTexture.loadFromFile("gfx/field.png"))
 		std::cerr << "Yikes, no field\n";
 	m_background.setTexture(&m_backgroundTexture);
-	m_background.setSize({ background_size, background_size});
+	m_background.setSize({ background_size, background_size });
 
 	// Setup Sheep.
 	if (!m_sheepTexture.loadFromFile("gfx/sheep_sheet.png"))
