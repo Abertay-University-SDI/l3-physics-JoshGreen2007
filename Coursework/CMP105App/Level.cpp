@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "Framework/Collision.h"
 
 Level::Level(sf::RenderWindow& hwnd, Input& in) :
 	BaseLevel(hwnd, in)
@@ -60,6 +61,7 @@ void Level::handleInput(float dt)
 // Update game objects
 void Level::update(float dt)
 {
+
 	if (m_gameOver) return;
 
 	// keep the sheep centered
@@ -70,6 +72,21 @@ void Level::update(float dt)
 
 	m_sheep.update(dt);
 	for (auto pig : m_pigPointers) pig->update(dt);
+
+	for (auto pig : m_pigPointers)
+	{
+
+		// Collision check for Sheep -> Pig
+		if (Collision::checkBoundingBox(m_sheep, *pig))
+		{
+
+			pig->collisionResponse(m_sheep);
+			m_sheep.collisionResponse(*pig);
+
+		}
+
+	}
+
 }
 
 // Render level

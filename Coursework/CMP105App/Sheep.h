@@ -16,6 +16,8 @@ public:
 	void setWorldSize(float x, float y);
 	void checkWallAndBounce();
 
+	void collisionResponse(GameObject& collider) override;
+
 private:
 	enum class Direction { UP, DOWN, LEFT, RIGHT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT, NONE };
 	Direction m_direction = Direction::NONE;

@@ -1,7 +1,15 @@
+#include <iostream>
+
+#include "Pig.h"
 #include "Sheep.h"
+#include "Framework/Collision.h"
 
 Sheep::Sheep()
 {
+
+	setCollisionBox({ {2.f , 2.f} , {60.f , 60.f} });
+	setCollider(true);
+
 	// initialise animations
 	for (int i = 0; i < 4; i++)
 		m_walkDown.addFrame({ { 64 * i, 0 }, { 64, 64 } });
@@ -161,15 +169,16 @@ void Sheep::checkWallAndBounce()
 	sf::Vector2f pos = getPosition();
 
 	if ((pos.x < 0 && m_velocity.x < 0) ||
-		(pos.x = getSize().x > m_worldSize.x &&
+		(pos.x + getSize().x > m_worldSize.x &&
 			m_velocity.x > 0))
 	{
+
 		m_velocity.x *= -CEOFF_OF_RESTITUTION;
 
 	}
 
 	if ((pos.y < 0 && m_velocity.y < 0) ||
-		(pos.y = getSize().y > m_worldSize.y &&
+		(pos.y + getSize().y > m_worldSize.y &&
 			m_velocity.y > 0))
 	{
 
@@ -177,4 +186,17 @@ void Sheep::checkWallAndBounce()
 
 	}
 
+}
+
+void Sheep::collisionResponse(GameObject& collider)
+{
+	// If the collider is a Pig, print a helpful message
+	if (dynamic_cast<Pig*>(&collider) != nullptr)
+	{
+		std::cout << "Sheep bumped into a Pig\n";
+	}
+	else
+	{
+		std::cout << "Sheep collided with something\n";
+	}
 }

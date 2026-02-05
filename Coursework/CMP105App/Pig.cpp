@@ -4,6 +4,10 @@
 
 Pig::Pig(sf::Vector2f worldSize)
 {
+
+	setCollisionBox({ {2.f , 2.f} , {60.f , 60.f} });
+	setCollider(true);
+
 	// initialise animations
 	for (int i = 0; i < 4; i++)
 		m_walkDown.addFrame({ { 64 * i, 0 }, { 64, 64 } });
@@ -132,6 +136,7 @@ void Pig::setRandomDirection()
 
 void Pig::update(float dt)
 {
+
     // tick down
     m_decisionTimer -= dt;
 
@@ -206,5 +211,11 @@ void Pig::update(float dt)
 		// .. if you aren't going up or down. 
 		}
 	}
-	
+}
+
+void Pig::collisionResponse(GameObject& collider)
+{
+
+	std::cout << "Smashed into the Sheep\n";
+
 }
