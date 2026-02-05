@@ -13,6 +13,8 @@ public:
 	void handleInput(float dt) override;
 	void update(float dt) override;
 
+	void setWorldSize(sf::Vector2f size) { m_worldSize = size; }
+
 private:
 	enum class Direction { UP, DOWN, LEFT, RIGHT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT, NONE };
 	Direction m_direction = Direction::NONE;
@@ -20,6 +22,8 @@ private:
 	float m_inputBuffer = 0.f;
 	const float INPUT_BUFFER_LENGTH = 0.1f;
 	const float APPROX_ONE_OVER_ROOT_TWO = 0.70710678f;	// 1 / sqrt(2)
+	const float CEOFF_OF_RESTITUTION = 0.8f;
+	sf::Vector2f m_worldSize;	// pass as param to constructor
 
 	const float ACCELERATION = 500.f;   // rate of acceleration, suggested range 10-500
 	const float DRAG_FACTOR = 0.95f;    // friction, suggest range 0.7-0.99

@@ -17,6 +17,7 @@ Level::Level(sf::RenderWindow& hwnd, Input& in) :
 	m_sheep.setTexture(&m_sheepTexture);
 	m_sheep.setPosition({ background_size / 2.f, background_size / 2.f });
 	m_sheep.setSize({ 64,64 });
+	m_sheep.setWorldSize({ background_size, background_size });
 
 	// Setup pigs.
 	std::vector<sf::Vector2f> pig_locations = {	// top corners and bottom middle
