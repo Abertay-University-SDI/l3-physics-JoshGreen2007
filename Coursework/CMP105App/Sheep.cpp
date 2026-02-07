@@ -59,7 +59,7 @@ void Sheep::handleInput(float dt)
 		inputDir.y -= 1.f;
 
 	}
-	
+
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::A))
 	{
 
@@ -103,17 +103,33 @@ void Sheep::update(float dt)
 	sf::Vector2f pos = getPosition();
 	sf::Vector2f size = getSize();
 
-	if (pos.x < 0 || pos.x + size.x > m_worldSize.x)
+	// Apply knockback for when Sheep goes beyond world boundaries
+
+	if (pos.x < 0)
 	{
 
-		m_velocity.x = -m_velocity.x * CEOFF_OF_RESTITUTION;
+		applyKnockback({ 1.f, 0.f });
 
 	}
 
-	if (pos.y < 0 || pos.y + size.y > m_worldSize.y)
+	else if (pos.x + size.x > m_worldSize.x)
 	{
 
-		m_velocity.y = -m_velocity.y * CEOFF_OF_RESTITUTION;
+		applyKnockback({ -1.f, 0.f });
+
+	}
+
+	if (pos.y < 0)
+	{
+
+		applyKnockback({ 0.f, 1.f });
+
+	}
+
+	else if (pos.y + size.y > m_worldSize.y)
+	{
+
+		applyKnockback({ 0.f, -1.f });
 
 	}
 
@@ -171,11 +187,14 @@ void Sheep::checkWallAndBounce()
 
 	sf::Vector2f pos = getPosition();
 
+	// If there is a wall collision instance, restitute velocity
+
 	if ((pos.x < 0 && m_velocity.x < 0) ||
 		(pos.x + getSize().x > m_worldSize.x &&
 			m_velocity.x > 0))
 	{
 
+		std::cout << "Wall collision instance (X-axis)\n" << std::endl;
 		m_velocity.x *= -CEOFF_OF_RESTITUTION;
 
 	}
@@ -185,7 +204,27 @@ void Sheep::checkWallAndBounce()
 			m_velocity.y > 0))
 	{
 
+		std::cout << "Wall collision instance (Y-axis)\n" << std::endl;
 		m_velocity.y *= -CEOFF_OF_RESTITUTION;
+
+	}
+
+}
+
+void Sheep::applyKnockback(const sf::Vector2f& normal)
+{
+
+	// Reflect velocity along the collision normal (dot product)
+	float dot = (m_velocity.x * normal.x) + (m_velocity.y * normal.y);
+	m_velocity -= 2.f * dot * normal;
+
+	m_velocity *= CEOFF_OF_RESTITUTION;
+
+	// Force a minimum speed at low velocity
+	if (m_velocity.length() < MINIMUM_VELOCITY)
+	{
+
+		m_velocity = normal * KNOCKBACK;
 
 	}
 
@@ -194,20 +233,30 @@ void Sheep::checkWallAndBounce()
 void Sheep::collisionResponse(GameObject& collider)
 {
 
-	std::cout << "Sheep collision instance";
+	std::cout << "Sheep collision instance" << std::endl;
 
-	m_velocity *= -CEOFF_OF_RESTITUTION;
-	if (m_velocity.lengthSquared() < 200)
+	sf::Vector2f normal = getPosition() - collider.getPosition();
+
+	if (normal.length() != 0.f)
 	{
 
-		move(m_velocity * 0.5f);
+		normal = normal.normalized();
 
 	}
 
 	else
 	{
 
-		move(m_velocity * 0.05f);
+		normal = { 0.f, 1.f };
+
+	}
+
+	applyKnockback(normal);
+
+	if (m_velocity.length() < MINIMUM_VELOCITY)
+	{
+
+		m_velocity = m_velocity.normalized() * KNOCKBACK;
 
 	}
 

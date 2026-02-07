@@ -16,9 +16,9 @@ public:
 	void render();
 
 private:
-	// Default functions for rendering to the screen.
 
-	// Default variables for level class.
+	float m_shakeTimer;
+	const float SHAKE_TIME = 0.2f;
 	bool m_gameOver;
 
 	sf::Texture m_backgroundTexture;

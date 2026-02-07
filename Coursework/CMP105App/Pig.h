@@ -30,7 +30,7 @@ private:
 	Animation m_walkDownRight;
 	Animation* m_currentAnimation;
 
-	const float WALK_SPEED = 200.0f;
+	const float WALK_SPEED = 100.0f;
 	const float PIG_THINKING_TIME = 2.0f; // Time between pig event. 2s as default
 	const int GRAZE_CHANCE = 40; // % chance of stopping to graze. 40 as default
 };

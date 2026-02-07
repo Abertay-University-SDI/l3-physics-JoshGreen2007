@@ -216,6 +216,6 @@ void Pig::update(float dt)
 void Pig::collisionResponse(GameObject& collider)
 {
 
-	std::cout << "Pig collision instance\n";
+	std::cout << "Pig collision instance\n" << std::endl;
 
 }
