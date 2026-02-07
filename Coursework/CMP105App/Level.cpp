@@ -64,6 +64,19 @@ void Level::update(float dt)
 
 	if (m_gameOver) return;
 
+	m_sheep.update(dt);
+	for (auto pig : m_pigPointers)
+	{
+
+		if (Collision::checkBoundingBox(m_sheep, *pig))
+		{
+
+			pig->collisionResponse(m_sheep);
+
+		}
+
+	}
+
 	// keep the sheep centered
 	sf::Vector2f pos = m_sheep.getPosition();
 	sf::View view = m_window.getView();
@@ -71,7 +84,12 @@ void Level::update(float dt)
 	m_window.setView(view);
 
 	m_sheep.update(dt);
-	for (auto pig : m_pigPointers) pig->update(dt);
+	for (auto pig : m_pigPointers)
+	{
+
+		pig->update(dt);
+
+	}
 
 	for (auto pig : m_pigPointers)
 	{

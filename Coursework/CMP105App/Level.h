@@ -2,6 +2,7 @@
 
 #include "Framework/BaseLevel.h"
 #include "Framework/GameObject.h"
+#include "Framework/Collision.h"
 #include "Pig.h"
 #include "Sheep.h"
 

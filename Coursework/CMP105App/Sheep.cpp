@@ -7,8 +7,6 @@
 Sheep::Sheep()
 {
 
-	collisionResponse();
-
 	setCollisionBox({ {2.f , 2.f} , {60.f , 60.f} });
 	setCollider(true);
 
