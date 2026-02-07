@@ -82,6 +82,8 @@ void Sheep::handleInput(float dt)
 
 	}
 
+	if (inputDir.length() < 0) { inputDir = inputDir.normalized(); }
+
 	// Convert direction into acceleration
 	m_acceleration = inputDir * ACCELERATION;
 
