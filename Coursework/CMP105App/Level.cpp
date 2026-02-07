@@ -1,6 +1,8 @@
 #include "Level.h"
 #include "Framework/Collision.h"
 
+// Note: Level is for collision detections, not the effects of the collision.
+
 Level::Level(sf::RenderWindow& hwnd, Input& in) :
 	BaseLevel(hwnd, in)
 {
@@ -84,16 +86,11 @@ void Level::update(float dt)
 	m_window.setView(view);
 
 	m_sheep.update(dt);
+
 	for (auto pig : m_pigPointers)
 	{
 
 		pig->update(dt);
-
-	}
-
-	for (auto pig : m_pigPointers)
-	{
-
 		// Collision check for Sheep -> Pig
 		if (Collision::checkBoundingBox(m_sheep, *pig))
 		{

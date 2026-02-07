@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "Pig.h"
 #include "Sheep.h"
@@ -192,13 +193,22 @@ void Sheep::checkWallAndBounce()
 
 void Sheep::collisionResponse(GameObject& collider)
 {
-	// If the collider is a Pig, print a helpful message
-	if (dynamic_cast<Pig*>(&collider) != nullptr)
+
+	std::cout << "Sheep collision instance";
+
+	m_velocity *= -CEOFF_OF_RESTITUTION;
+	if (m_velocity.lengthSquared() < 200)
 	{
-		std::cout << "Sheep bumped into a Pig\n";
+
+		move(m_velocity * 0.5f);
+
 	}
+
 	else
 	{
-		std::cout << "Sheep collided with something\n";
+
+		move(m_velocity * 0.05f);
+
 	}
+
 }
