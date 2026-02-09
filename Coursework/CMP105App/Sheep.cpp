@@ -81,7 +81,8 @@ void Sheep::handleInput(float dt)
 
 	}
 
-	if (inputDir.length() < 0) { inputDir = inputDir.normalized(); }
+	// Convert input into normalized (removes 1.4x speed increase on diagonal movement)
+	if (inputDir.length() > 0) { inputDir = inputDir.normalized(); }
 
 	// Convert direction into acceleration
 	m_acceleration = inputDir * ACCELERATION;
