@@ -6,6 +6,10 @@
 Level::Level(sf::RenderWindow& hwnd, Input& in) :
 	BaseLevel(hwnd, in)
 {
+
+	m_shakeTimer = 0.f;
+	m_gameOver = false;
+
 	// setup background
 	float background_size = 1024;
 	if (!m_backgroundTexture.loadFromFile("gfx/field.png"))
@@ -82,8 +86,35 @@ void Level::update(float dt)
 	// keep the sheep centered
 	sf::Vector2f pos = m_sheep.getPosition();
 	sf::View view = m_window.getView();
-	view.setCenter(pos);
-	m_window.setView(view);
+
+
+	// Create screen shake
+	if (m_shakeTimer > 0.f)
+	{
+
+		//Decrease timer every frame
+		m_shakeTimer -= dt;
+		float shakeStrength = 3.f;
+		
+		// Randomly offset Camera around the Sheep
+		float offsetX = (std::rand() % 8 - 5.f) * shakeStrength;
+		float offsetY = (std::rand() % 8 - 5.f) * shakeStrength;
+
+		// Initialize the shake
+		view.setCenter(pos + sf::Vector2f(offsetX, offsetY));
+		m_window.setView(view);
+
+	}
+
+	else
+	{
+
+		// When the timer reaches zero, the camera resets back to normal
+
+		view.setCenter(pos);
+		m_window.setView(view);
+
+	}
 
 	m_sheep.update(dt);
 
@@ -97,6 +128,8 @@ void Level::update(float dt)
 
 			pig->collisionResponse(m_sheep);
 			m_sheep.collisionResponse(*pig);
+
+			m_shakeTimer = SHAKE_TIME;
 
 		}
 

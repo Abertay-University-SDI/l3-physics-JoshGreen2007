@@ -233,7 +233,7 @@ void Sheep::applyKnockback(const sf::Vector2f& normal)
 void Sheep::collisionResponse(GameObject& collider)
 {
 
-	std::cout << "Sheep collision instance" << std::endl;
+	std::cout << "Sheep collision instance\n" << std::endl;
 
 	sf::Vector2f normal = getPosition() - collider.getPosition();
 
